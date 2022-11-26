@@ -2,11 +2,16 @@ var express = require('express');
 var multer  = require('multer');
 var fs  = require('fs');
 
+const port = 3000;
+
 var app = express();
 app.set('view engine', 'ejs');
+app.use(express.static('uploads'))
 
 app.get('/', (req, res) => {
-    res.render('index');
+    res.render('index', {
+        user: "lidan"
+    });
 });
 
 var storage = multer.diskStorage({
@@ -31,4 +36,6 @@ app.post('/upload', function (req, res, next) {
     });
 })
 
-app.listen(3000);
+app.listen(port, () => {
+    console.log(`App listening on port ${port}`)
+});
