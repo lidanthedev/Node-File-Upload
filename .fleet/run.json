@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "command",
+            "name": "Run server",
+            "program": "node.exe",
+            "args": ["server.js"],
+        },
+
+    ]
+}

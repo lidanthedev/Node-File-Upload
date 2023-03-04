@@ -20,6 +20,7 @@
 </head>
 <body>
     <div class="container">
+        <h1>Node.js Simple File Upload by <%= user %></h1>
         <form action="/upload" method="post" enctype="multipart/form-data">
             <input type="file" name="files"
             class="btn btn-primary" id="file"
@@ -28,6 +29,10 @@
                 Upload
             </button>
         </form>
+        <%- include('../views/files.ejs', {
+            fs: fs,
+            path: path,
+            __dirname: __dirname}); %>
     </div>
     <script type="text/javascript">
         document.getElementById("file").value = "";

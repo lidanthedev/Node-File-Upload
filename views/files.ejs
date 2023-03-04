@@ -1,0 +1,36 @@
+<table>
+    <thead>
+        <tr>
+            <th>File Name</th>
+            <th>Size</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% const directoryPath=path.join(__dirname, 'uploads' );
+            const files=fs.readdirSync(directoryPath).map((file)=> {
+            const filePath = path.join(directoryPath, file);
+            const stats = fs.statSync(filePath);
+            return {
+            name: file,
+            size: stats.size
+            };
+            }).sort((a, b) => b.size - a.size);
+            files.forEach((file) => {
+            const fileSizeInBytes = file.size;
+            let fileSize, unit;
+            if (fileSizeInBytes < 1024) { fileSize=fileSizeInBytes.toFixed(2); unit='B' ; } else if (fileSizeInBytes <
+                1024 * 1024) { fileSize=(fileSizeInBytes / 1024).toFixed(2); unit='KB' ; } else if (fileSizeInBytes <
+                1024 * 1024 * 1024) { fileSize=(fileSizeInBytes / (1024 * 1024)).toFixed(2); unit='MB' ; } else {
+                fileSize=(fileSizeInBytes / (1024 * 1024 * 1024)).toFixed(2); unit='GB' ; } %>
+                <tr>
+                    <td>
+                        <a href="<%= file.name %>" download><%= file.name %></a> 
+                    </td>
+                    <td>
+                        <%= fileSize %>
+                            <%= unit %>
+                    </td>
+                </tr>
+                <% }); %>
+    </tbody>
+</table>
