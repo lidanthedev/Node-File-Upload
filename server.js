@@ -1,11 +1,11 @@
-var express = require('express');
-var multer  = require('multer');
-var fs  = require('fs');
-var ejs  = require('ejs');
+const express = require('express');
+const multer = require('multer');
+const fs = require('fs');
+const ejs = require('ejs');
 
 const PORT = 3000;
 
-var app = express();
+const app = express();
 app.set('view engine', 'ejs');
 app.use(express.static('uploads'))
 
@@ -18,10 +18,10 @@ app.get('/', (req, res) => {
     });
 });
 
-var storage = multer.diskStorage({
+const storage = multer.diskStorage({
     destination: function (req, file, callback) {
         var dir = './uploads';
-        if (!fs.existsSync(dir)){
+        if (!fs.existsSync(dir)) {
             fs.mkdirSync(dir);
         }
         callback(null, dir);
@@ -30,13 +30,13 @@ var storage = multer.diskStorage({
         callback(null, file.originalname);
     }
 });
-var upload = multer({storage: storage}).array('files', 12);
+const upload = multer({storage: storage}).array('files', 12);
 app.post('/upload', function (req, res, next) {
     upload(req, res, function (err) {
         if (err) {
             return res.end("Something went wrong:(");
         }
-        res.end("Upload completed.");
+        res.redirect("/");
     });
 })
 
